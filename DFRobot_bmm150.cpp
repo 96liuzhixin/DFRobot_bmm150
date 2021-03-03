@@ -1,19 +1,19 @@
 /*!
- * @file DFRobot_bmm150.cpp
- * @brief Define the infrastructure of the DFRobot_bmm150 class and the implementation of the underlying methods
+ * @file DFRobot_BMM150.cpp
+ * @brief Define the infrastructure of the DFRobot_BMM150 class and the implementation of the underlying methods
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @licence     The MIT License (MIT)
  * @author      [ZhixinLiu](zhixin.liu@dfrobot.com)
  * @version     V1.0
  * @date        2020-6-8
- * @url         https://github.com/DFRobot/DFRobot_bmm150
+ * @url         https://github.com/DFRobot/DFRobot_BMM150
  */
 #include "DFRobot_bmm150.h"
 
-DFRobot_bmm150::DFRobot_bmm150()
+DFRobot_BMM150::DFRobot_BMM150()
 {
 }
-DFRobot_bmm150::~DFRobot_bmm150()
+DFRobot_BMM150::~DFRobot_BMM150()
 {
 }
 
@@ -26,7 +26,7 @@ DFRobot_bmm150::~DFRobot_bmm150()
  *      true is   init success
  *      false is  init error
  */
-bool DFRobot_bmm150::sensorInit()
+bool DFRobot_BMM150::sensorInit()
 {
   uint8_t chipID;
   int8_t  rslt    = 0;
@@ -48,7 +48,7 @@ bool DFRobot_bmm150::sensorInit()
  *
  *  @return chip id
  */
-uint8_t DFRobot_bmm150::getChipID(void)
+uint8_t DFRobot_BMM150::getChipID(void)
 {
   uint8_t chipID = 0;
   getReg(BMM150_REG_CHIP_ID, &chipID, 1);
@@ -61,7 +61,7 @@ uint8_t DFRobot_bmm150::getChipID(void)
  *  @param regData register data
  *  @param len register data length
  */
-void DFRobot_bmm150::setReg(uint8_t regAddr ,uint8_t *regData, uint8_t len)
+void DFRobot_BMM150::setReg(uint8_t regAddr ,uint8_t *regData, uint8_t len)
 {
   delay(3);
   writeData(regAddr ,regData ,len);
@@ -74,7 +74,7 @@ void DFRobot_bmm150::setReg(uint8_t regAddr ,uint8_t *regData, uint8_t len)
  *  @param regData register data
  *  @param len register data length
  */
-void DFRobot_bmm150::getReg(uint8_t regAddr, uint8_t *regData, uint8_t len)
+void DFRobot_BMM150::getReg(uint8_t regAddr, uint8_t *regData, uint8_t len)
 {
   delay(3);
   readData(regAddr ,regData ,len);
@@ -83,7 +83,7 @@ void DFRobot_bmm150::getReg(uint8_t regAddr, uint8_t *regData, uint8_t len)
 /*!
  *  @brief soft reset
  */
-void DFRobot_bmm150::softReset(void)
+void DFRobot_BMM150::softReset(void)
 {
   uint8_t regData = 0;
   getReg(BMM150_REG_POWER_CONTROL, &regData, 1);
@@ -101,7 +101,7 @@ void DFRobot_bmm150::softReset(void)
  *      BMM150_POWERMODE_SLEEP
  *      BMM150_POWERMODE_SUSPEND
  */
-void DFRobot_bmm150::setOperationMode(uint8_t opMode)
+void DFRobot_BMM150::setOperationMode(uint8_t opMode)
 {
   switch (opMode)
   {
@@ -138,7 +138,7 @@ void DFRobot_bmm150::setOperationMode(uint8_t opMode)
  *      BMM150_DATA_RATE_25HZ
  *      BMM150_DATA_RATE_30HZ
  */
-void DFRobot_bmm150::setRate(uint8_t rate)
+void DFRobot_BMM150::setRate(uint8_t rate)
 {
   uint8_t regData;
   getReg(BMM150_REG_OP_MODE, &regData, 1);
@@ -173,7 +173,7 @@ void DFRobot_bmm150::setRate(uint8_t rate)
  *      BMM150_DATA_RATE_25HZ
  *      BMM150_DATA_RATE_30HZ
  */
-uint8_t DFRobot_bmm150::getRate(void)
+uint8_t DFRobot_BMM150::getRate(void)
 {
   uint8_t regData;
   getReg(BMM150_REG_OP_MODE, &regData, 1);
@@ -189,7 +189,7 @@ uint8_t DFRobot_bmm150::getRate(void)
  *      BMM150_POWERMODE_SLEEP
  *      BMM150_POWERMODE_SUSPEND
  */
-uint8_t DFRobot_bmm150::getOperationMode(void)
+uint8_t DFRobot_BMM150::getOperationMode(void)
 {
   uint8_t regData = 0;
   uint8_t powerData = 0;
@@ -209,7 +209,7 @@ uint8_t DFRobot_bmm150::getOperationMode(void)
  *      BMM150_PRESETMODE_HIGHACCURACY
  *      BMM150_PRESETMODE_ENHANCED
  */
-void DFRobot_bmm150::setPresetMode(uint8_t presetMode)
+void DFRobot_BMM150::setPresetMode(uint8_t presetMode)
 {
   struct bmm150Settings settings;
   switch (presetMode){
@@ -242,14 +242,14 @@ void DFRobot_bmm150::setPresetMode(uint8_t presetMode)
   }
 }
 
-void DFRobot_bmm150::setOdrXYZ(const struct bmm150Settings *settings)
+void DFRobot_BMM150::setOdrXYZ(const struct bmm150Settings *settings)
 {
   setOdr(settings);
   setXYRep(settings);
   setZRep(settings);
 }
 
-void DFRobot_bmm150::setXYRep(const struct bmm150Settings *settings)
+void DFRobot_BMM150::setXYRep(const struct bmm150Settings *settings)
 {
   uint8_t repXY;
   /* Set the xy repetition */
@@ -257,7 +257,7 @@ void DFRobot_bmm150::setXYRep(const struct bmm150Settings *settings)
   setReg(BMM150_REG_REP_XY, &repXY, 1);
 }
 
-void DFRobot_bmm150::setOdr(const struct bmm150Settings *settings)
+void DFRobot_BMM150::setOdr(const struct bmm150Settings *settings)
 {
   uint8_t regData;
   getReg(BMM150_REG_OP_MODE, &regData, 1);
@@ -265,7 +265,7 @@ void DFRobot_bmm150::setOdr(const struct bmm150Settings *settings)
   setReg(BMM150_REG_OP_MODE, &regData, 1);
 }
 
-void DFRobot_bmm150::setZRep(const struct bmm150Settings *settings)
+void DFRobot_BMM150::setZRep(const struct bmm150Settings *settings)
 {
   uint8_t repZ;
   repZ = settings->zRep;
@@ -277,7 +277,7 @@ void DFRobot_bmm150::setZRep(const struct bmm150Settings *settings)
  *
  *  @param struct bmm150message data 
  */
-void DFRobot_bmm150::getGeomagneticData(struct bmm150MagData *magData)
+void DFRobot_BMM150::getGeomagneticData(struct bmm150MagData *magData)
 {
   int16_t msbData;
   uint8_t regData[BMM150_LEN_XYZR_DATA] = { 0 };
@@ -285,6 +285,7 @@ void DFRobot_bmm150::getGeomagneticData(struct bmm150MagData *magData)
 
   // Read the mag data registers
   getReg(BMM150_REG_DATA_X_LSB, regData, BMM150_LEN_XYZR_DATA);
+
   regData[0] = BMM150_GET_BITS(regData[0], BMM150_DATA_X);
   msbData = ((int16_t)((int8_t)regData[1])) * 32;
   rawMagData.rawDataX = (int16_t)(msbData | regData[0]);
@@ -296,7 +297,7 @@ void DFRobot_bmm150::getGeomagneticData(struct bmm150MagData *magData)
   regData[4] = BMM150_GET_BITS(regData[4], BMM150_DATA_Z);
   msbData = ((int16_t)((int8_t)regData[5])) * 128;
   rawMagData.rawDataZ = (int16_t)(msbData | regData[4]);
-
+  
   regData[6] = BMM150_GET_BITS(regData[6], BMM150_DATA_RHALL);
   rawMagData.rawDataR = (uint16_t)(((uint16_t)regData[7] << 6) | regData[6]);
   
@@ -322,7 +323,7 @@ void DFRobot_bmm150::getGeomagneticData(struct bmm150MagData *magData)
  *  @retval  7       BMM150_W_NORMAL_SELF_TEST_XYZ_FAIL
  *  @retval  8       BMM150_W_ADV_SELF_TEST_FAIL
  */
-int8_t DFRobot_bmm150::selfTest(uint8_t testMode)
+int8_t DFRobot_BMM150::selfTest(uint8_t testMode)
 {
   int8_t rslt;
   struct bmm150Settings settings;
@@ -350,7 +351,7 @@ int8_t DFRobot_bmm150::selfTest(uint8_t testMode)
  *      enable  : BMM150_POWER_CNTRL_ENABLE
  *      disable : BMM150_POWER_CNTRL_DISABLE  (default disable)
  */
-void DFRobot_bmm150::setPowerControlBit(uint8_t powerBit)
+void DFRobot_BMM150::setPowerControlBit(uint8_t powerBit)
 {
   uint8_t regData = 0;
   getReg(BMM150_REG_POWER_CONTROL, &regData, 1);
@@ -361,7 +362,7 @@ void DFRobot_bmm150::setPowerControlBit(uint8_t powerBit)
 /*!
  *  @brief read trim data
  */
-void DFRobot_bmm150::getTrimData(void)
+void DFRobot_BMM150::getTrimData(void)
 {
   uint8_t trimX1Y1[2] = { 0 };
   uint8_t trimXYXData[4] = { 0 };
@@ -377,7 +378,7 @@ void DFRobot_bmm150::getTrimData(void)
   _trimData.digX1 = (int8_t)trimX1Y1[0];
   _trimData.digY1 = (int8_t)trimX1Y1[1];
   _trimData.digX2 = (int8_t)trimXYXData[2];
-   _trimData.digY2 = (int8_t)trimXYXData[3];
+  _trimData.digY2 = (int8_t)trimXYXData[3];
   tempMsb = ((uint16_t)trimXY1XY2[3]) << 8;
   _trimData.digZ1 = (uint16_t)(tempMsb | trimXY1XY2[2]);
   tempMsb = ((uint16_t)trimXY1XY2[1]) << 8;
@@ -393,7 +394,7 @@ void DFRobot_bmm150::getTrimData(void)
 }
 
 
-void DFRobot_bmm150::writeOpMode(uint8_t opMode)
+void DFRobot_BMM150::writeOpMode(uint8_t opMode)
 {
   uint8_t regData = 0;
   getReg(BMM150_REG_OP_MODE, &regData, 1);
@@ -401,14 +402,14 @@ void DFRobot_bmm150::writeOpMode(uint8_t opMode)
   setReg(BMM150_REG_OP_MODE, &regData, 1);
 }
 
-void DFRobot_bmm150::suspendToSleepMode(void)
+void DFRobot_BMM150::suspendToSleepMode(void)
 {
   setPowerControlBit(BMM150_POWER_CNTRL_ENABLE);
 }
 
 
 
-void DFRobot_bmm150::setControlMeasurementXYZ(const struct bmm150Settings *settings)
+void DFRobot_BMM150::setControlMeasurementXYZ(const struct bmm150Settings *settings)
 {
   uint8_t regData;
   getReg(BMM150_REG_AXES_ENABLE, &regData, 1);
@@ -424,7 +425,7 @@ void DFRobot_bmm150::setControlMeasurementXYZ(const struct bmm150Settings *setti
  *  @param dataRhall   compensate data
  *  @return Compensated X-axis data
  */
-int16_t DFRobot_bmm150::compensateX(int16_t magDataX, uint16_t dataRhall)
+int16_t DFRobot_BMM150::compensateX(int16_t magDataX, uint16_t dataRhall)
 {
   int16_t retval;
   uint16_t processCompX0 = 0;
@@ -481,7 +482,7 @@ int16_t DFRobot_bmm150::compensateX(int16_t magDataX, uint16_t dataRhall)
  *  @param dataRhall   compensate data
  *  @return Compensated y-axis data
  */
-int16_t DFRobot_bmm150::compensateY(int16_t magDataY, uint16_t dataRhall)
+int16_t DFRobot_BMM150::compensateY(int16_t magDataY, uint16_t dataRhall)
 {
   int16_t retval;
   uint16_t processCompY0 = 0;
@@ -537,7 +538,7 @@ int16_t DFRobot_bmm150::compensateY(int16_t magDataY, uint16_t dataRhall)
  *  @param dataRhall   compensate data
  *  @return Compensated z-axis data
  */
-int16_t DFRobot_bmm150::compensateZ(int16_t magDataZ, uint16_t dataRhall)
+int16_t DFRobot_BMM150::compensateZ(int16_t magDataZ, uint16_t dataRhall)
 {
   int32_t retval;
   int16_t processCompZ0;
@@ -578,7 +579,7 @@ int16_t DFRobot_bmm150::compensateZ(int16_t magDataZ, uint16_t dataRhall)
  * @brief This internal API is used to perform the normal self test
  * of the sensor and return the self test result as return value
  */
-int8_t DFRobot_bmm150::normalSelfTest(void)
+int8_t DFRobot_BMM150::normalSelfTest(void)
 {
   int8_t rslt;
   uint8_t selfTestBit;
@@ -599,7 +600,7 @@ int8_t DFRobot_bmm150::normalSelfTest(void)
  * the Self Test bit (bit0) of the 0x4C register,
  * which triggers the start of self test
  */
-uint8_t DFRobot_bmm150::enableNormalSelfTest(void)
+uint8_t DFRobot_BMM150::enableNormalSelfTest(void)
 {
   uint8_t regData;
   uint8_t selfTestValue;
@@ -623,7 +624,7 @@ uint8_t DFRobot_bmm150::enableNormalSelfTest(void)
  * by using the self test status available in the bit0 of registers 0x42,0x44
  * and 0x46.
  */
-int8_t DFRobot_bmm150::validatNormalSelfTest(void)
+int8_t DFRobot_BMM150::validatNormalSelfTest(void)
 {
   int8_t rslt;
   uint8_t status;
@@ -664,7 +665,7 @@ int8_t DFRobot_bmm150::validatNormalSelfTest(void)
   return rslt;
 }
 
-int8_t DFRobot_bmm150::advSelfTest(void)
+int8_t DFRobot_BMM150::advSelfTest(void)
 {
   int8_t rslt;
   uint8_t selfTestCurrent;
@@ -688,7 +689,7 @@ int8_t DFRobot_bmm150::advSelfTest(void)
   return rslt;
 }
 
-void DFRobot_bmm150::advSelfTestSet(void)
+void DFRobot_BMM150::advSelfTestSet(void)
 {
   struct bmm150Settings settings;
 
@@ -707,7 +708,7 @@ void DFRobot_bmm150::advSelfTestSet(void)
  * @brief This internal API is used to set the positive or negative value of
  * self-test current and obtain the corresponding magnetometer z axis data
  */
-void DFRobot_bmm150::advSelfTestMeasurement(uint8_t selfTestCurrent, int16_t *dataZ)
+void DFRobot_BMM150::advSelfTestMeasurement(uint8_t selfTestCurrent, int16_t *dataZ)
 {
   struct bmm150Settings settings;
   struct bmm150MagData magData;
@@ -722,7 +723,7 @@ void DFRobot_bmm150::advSelfTestMeasurement(uint8_t selfTestCurrent, int16_t *da
  * Z axis mag data obtained by positive and negative self-test current
  * and validate whether the advanced self test is done successfully or not.
  */
-int8_t DFRobot_bmm150::validateAdvSelfTest(int16_t postiveDataZ, int16_t negativeDataZ)
+int8_t DFRobot_BMM150::validateAdvSelfTest(int16_t postiveDataZ, int16_t negativeDataZ)
 {
   int32_t adv_self_test_rslt;
 
@@ -743,7 +744,7 @@ int8_t DFRobot_bmm150::validateAdvSelfTest(int16_t postiveDataZ, int16_t negativ
  * @brief This internal API is used to set the self test current value in
  * the Adv. ST bits (bit6 and bit7) of 0x4C register
  */
-void DFRobot_bmm150::setAdvSelfTestCurrent(uint8_t selfTestCurrent)
+void DFRobot_BMM150::setAdvSelfTestCurrent(uint8_t selfTestCurrent)
 {
   uint8_t regData;
   /* Read the 0x4C register */
@@ -763,7 +764,7 @@ void DFRobot_bmm150::setAdvSelfTestCurrent(uint8_t selfTestCurrent)
  *      high     : POKARITY_HIGH  (default active high level )
  *      low      : POKARITY_LOW
  */
-void DFRobot_bmm150::setDataReadlyInterruptPin(uint8_t modes ,uint8_t polarity)
+void DFRobot_BMM150::setDataReadlyInterruptPin(uint8_t modes ,uint8_t polarity)
 {
   uint8_t regData = 0;
   getReg(BMM150_REG_AXES_ENABLE, &regData, 1);
@@ -788,7 +789,7 @@ void DFRobot_bmm150::setDataReadlyInterruptPin(uint8_t modes ,uint8_t polarity)
  *      1 is   data is ready
  *      0 is   data is not ready
  */
-uint8_t DFRobot_bmm150::getDataReadlyState(void)
+uint8_t DFRobot_BMM150::getDataReadlyState(void)
 {
   uint8_t regData = 0;
   getReg(BMM150_REG_DATA_READY_STATUS, &regData, 1);
@@ -809,7 +810,7 @@ uint8_t DFRobot_bmm150::getDataReadlyState(void)
  *      high     : POKARITY_HIGH  (default active high level )
  *      low      : POKARITY_LOW
  */
-void DFRobot_bmm150::setInterrputPin(uint8_t modes ,uint8_t polarity)
+void DFRobot_BMM150::setInterrputPin(uint8_t modes ,uint8_t polarity)
 {
   uint8_t regData = 0;
   getReg(BMM150_REG_AXES_ENABLE, &regData, 1);
@@ -827,7 +828,7 @@ void DFRobot_bmm150::setInterrputPin(uint8_t modes ,uint8_t polarity)
 }
 
 /*!
- *  @brief Set the channel and value of the high threshold interrupt 
+ *  @brief Set the channel and value of the low threshold interrupt 
  *
  *  @param channelX  channel x selection:
  *      enable x  : LOW_INTERRUPT_X_ENABLE
@@ -836,11 +837,11 @@ void DFRobot_bmm150::setInterrputPin(uint8_t modes ,uint8_t polarity)
  *      enable y  : LOW_INTERRUPT_Y_ENABLE
  *      disable y : LOW_INTERRUPT_Y_DISABLE
  *  @param channelY  channel y selection:
- *      enable z  : LOW_INTERRUPT_X_ENABLE
- *      disable z : LOW_INTERRUPT_X_DISABLE
+ *      enable z  : LOW_INTERRUPT_Z_ENABLE
+ *      disable z : LOW_INTERRUPT_Z_DISABLE
  *  @param  lowThreshold is low threshold
  */
-void DFRobot_bmm150::setLowThresholdInterrupt(uint8_t channelX ,uint8_t channelY, uint8_t channelZ , int8_t lowThreshold)
+void DFRobot_BMM150::setLowThresholdInterrupt(uint8_t channelX ,uint8_t channelY, uint8_t channelZ , int8_t lowThreshold)
 {
   uint8_t regData = 0;
   uint8_t temp     = 0;
@@ -879,11 +880,17 @@ void DFRobot_bmm150::setLowThresholdInterrupt(uint8_t channelX ,uint8_t channelY
  *      1-7 is  interrupt
  *      0 is  no interrupt
  */
-uint8_t DFRobot_bmm150::getLowThresholdInterrputState(void)
+uint8_t DFRobot_BMM150::getLowThresholdInterrputState(void)
 {
   uint8_t regData = 0;
-  getReg(BMM150_REG_INTERRUPT_STATUS, &regData, 1);
-  return regData&0x07;
+  uint8_t state = getDataReadlyState();
+  if(state == 1){
+    getReg(BMM150_REG_INTERRUPT_STATUS, &regData, 1);
+    return regData&0x07;
+  }else{
+    return 0;
+  }
+  
 }
 
 /*!
@@ -900,7 +907,7 @@ uint8_t DFRobot_bmm150::getLowThresholdInterrputState(void)
  *      disable z : HIGH_INTERRUPT_X_DISABLE
  *  @param  highThreshold is high threshold
  */
-void DFRobot_bmm150::setHighThresholdInterrupt(uint8_t channelX ,uint8_t channelY, uint8_t channelZ , int8_t highThreshold)
+void DFRobot_BMM150::setHighThresholdInterrupt(uint8_t channelX ,uint8_t channelY, uint8_t channelZ , int8_t highThreshold)
 {
   uint8_t regData = 0;
 
@@ -941,12 +948,16 @@ void DFRobot_bmm150::setHighThresholdInterrupt(uint8_t channelX ,uint8_t channel
  *      1-7 is  interrupt
  *      0 is  no interrupt
  */
-uint8_t DFRobot_bmm150::getHighThresholdInterrputState(void)
+uint8_t DFRobot_BMM150::getHighThresholdInterrputState(void)
 {
   uint8_t regData = 0;
-  int8_t  rslt;
-  getReg(BMM150_REG_INTERRUPT_STATUS, &regData, 1);
-  return (regData&0x38)>>3;
+  uint8_t state = getDataReadlyState();
+  if(state == 1){
+    getReg(BMM150_REG_INTERRUPT_STATUS, &regData, 1);
+    return (regData&0x38)>>3;
+  }else{
+    return 0;
+  }
 }
 
 /*!
@@ -958,7 +969,7 @@ uint8_t DFRobot_bmm150::getHighThresholdInterrputState(void)
  *      latch    : INTERRUPUT_LATCH_ENABLE  (dafault interrupt latch)
  *      no latch : INTERRUPUT_LATCH_DISABLE
  */
-void DFRobot_bmm150::setInterruputLatch(uint8_t modes)
+void DFRobot_BMM150::setInterruputLatch(uint8_t modes)
 {
   uint8_t regData = 0;
   int8_t  rslt;
@@ -984,7 +995,7 @@ void DFRobot_bmm150::setInterruputLatch(uint8_t modes)
  *      enable z  : MEASUREMENT_Z_ENABLE  (Default z-axis channel enabled)
  *      disable z : MEASUREMENT_Z_DISABLE
  */
-void DFRobot_bmm150::setMeasurementXYZ(uint8_t channelX ,uint8_t channelY, uint8_t channelZ)
+void DFRobot_BMM150::setMeasurementXYZ(uint8_t channelX ,uint8_t channelY, uint8_t channelZ)
 {
   uint8_t regData = 0;
   int8_t  rslt;
@@ -1014,11 +1025,11 @@ void DFRobot_bmm150::setMeasurementXYZ(uint8_t channelX ,uint8_t channelY, uint8
  *      channel x : CHANNEL_X
  *      channel y : CHANNEL_Y
  *      channel z : CHANNEL_Z
- *  @return status  interrupt status
+ *  @return status  measurement status
  *      1 is  enable measurement
  *      0 is  disable measurement
  */
-uint8_t DFRobot_bmm150::getMeasurementStateXYZ(uint8_t channel)
+uint8_t DFRobot_BMM150::getMeasurementStateXYZ(uint8_t channel)
 {
   uint8_t regData = 0;
 
@@ -1050,7 +1061,7 @@ uint8_t DFRobot_bmm150::getMeasurementStateXYZ(uint8_t channel)
  *      enable  : DATA_OVERRUN_ENABLE
  *      disable : DATA_OVERRUN_DISABLE  (dafault disable overrun)
  */
-void DFRobot_bmm150::setDataOverrun(uint8_t modes)
+void DFRobot_BMM150::setDataOverrun(uint8_t modes)
 {
   uint8_t regData = 0;
 
@@ -1070,7 +1081,7 @@ void DFRobot_bmm150::setDataOverrun(uint8_t modes)
  *      1 is  data overrun
  *      0 is  not data overrun
  */
-uint8_t DFRobot_bmm150::getDataOverrunState(void)
+uint8_t DFRobot_BMM150::getDataOverrunState(void)
 {
   uint8_t regData = 0;
   int8_t  rslt;
@@ -1089,7 +1100,7 @@ uint8_t DFRobot_bmm150::getDataOverrunState(void)
  *      enable  : OVERFLOW_INT_ENABLE
  *      disable : OVERFLOW_INT_DISABLE  (dafault disable overflow)
  */
-void DFRobot_bmm150::setOverflowPin(uint8_t modes)
+void DFRobot_BMM150::setOverflowPin(uint8_t modes)
 {
   uint8_t regData = 0;
   int8_t  rslt;
@@ -1109,7 +1120,7 @@ void DFRobot_bmm150::setOverflowPin(uint8_t modes)
  *      1 is  overflow
  *      0 is  not overflow
  */
-uint8_t DFRobot_bmm150::getOverflowState(void)
+uint8_t DFRobot_BMM150::getOverflowState(void)
 {
   uint8_t regData = 0;
   int8_t  rslt;
@@ -1122,13 +1133,13 @@ uint8_t DFRobot_bmm150::getOverflowState(void)
 }
 
 
-DFRobot_bmm150_I2C::DFRobot_bmm150_I2C(TwoWire *pWire, uint8_t addr)
+DFRobot_BMM150_I2C::DFRobot_BMM150_I2C(TwoWire *pWire, uint8_t addr)
 {
   _pWire = pWire;
   this->_I2C_addr = addr;
 }
 
-bool DFRobot_bmm150_I2C::begin()
+bool DFRobot_BMM150_I2C::begin()
 {
   _pWire->begin();
   _pWire->beginTransmission(_I2C_addr);
@@ -1142,7 +1153,7 @@ bool DFRobot_bmm150_I2C::begin()
   }
 }
 
-void DFRobot_bmm150_I2C::writeData(uint8_t Reg ,uint8_t *Data ,uint8_t len)
+void DFRobot_BMM150_I2C::writeData(uint8_t Reg ,uint8_t *Data ,uint8_t len)
 {
   _pWire->beginTransmission(this->_I2C_addr);
   _pWire->write(Reg);
@@ -1153,7 +1164,7 @@ void DFRobot_bmm150_I2C::writeData(uint8_t Reg ,uint8_t *Data ,uint8_t len)
   _pWire->endTransmission();
 }
 
-int16_t DFRobot_bmm150_I2C::readData(uint8_t Reg,uint8_t *Data,uint8_t len)
+int16_t DFRobot_BMM150_I2C::readData(uint8_t Reg,uint8_t *Data,uint8_t len)
 {
   int i=0;
   _pWire->beginTransmission(this->_I2C_addr);
@@ -1171,13 +1182,13 @@ int16_t DFRobot_bmm150_I2C::readData(uint8_t Reg,uint8_t *Data,uint8_t len)
 }
 
 #if 1
-DFRobot_bmm150_SPI::DFRobot_bmm150_SPI(SPIClass *pSpi, uint8_t csPin)
+DFRobot_BMM150_SPI::DFRobot_BMM150_SPI(SPIClass *pSpi, uint8_t csPin)
 {
   _pSpi = pSpi;
   _csPin = csPin;
 }
 
-bool DFRobot_bmm150_SPI::begin(void)
+bool DFRobot_BMM150_SPI::begin(void)
 {
   pinMode(_csPin, OUTPUT);
   digitalWrite(_csPin, 1);
@@ -1187,7 +1198,7 @@ bool DFRobot_bmm150_SPI::begin(void)
   return true;
 }
 
-void DFRobot_bmm150_SPI::writeData(uint8_t Reg ,uint8_t *Data ,uint8_t len)
+void DFRobot_BMM150_SPI::writeData(uint8_t Reg ,uint8_t *Data ,uint8_t len)
 {
   digitalWrite(_csPin, 0);
   _pSpi->transfer(Reg&0x7F);
@@ -1198,7 +1209,7 @@ void DFRobot_bmm150_SPI::writeData(uint8_t Reg ,uint8_t *Data ,uint8_t len)
   }
 }
 
-int16_t DFRobot_bmm150_SPI::readData(uint8_t Reg,uint8_t *Data,uint8_t len)
+int16_t DFRobot_BMM150_SPI::readData(uint8_t Reg,uint8_t *Data,uint8_t len)
 {
   digitalWrite(_csPin, 0);
   _pSpi->transfer(Reg|0x80);

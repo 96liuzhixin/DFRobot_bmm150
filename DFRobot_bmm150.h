@@ -1,15 +1,15 @@
 /*!
- * @file  DFRobot_bmm150.h
- * @brief Defines the infrastructure of the DFRobot_bmm150 class
+ * @file  DFRobot_BMM150.h
+ * @brief Defines the infrastructure of the DFRobot_BMM150 class
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @licence     The MIT License (MIT)
  * @author      [ZhixinLiu](zhixin.liu@dfrobot.com)
  * @version     V1.0
  * @date        2020-6-8
- * @url         https://github.com/DFRobot/DFRobot_bmm150
+ * @url         https://github.com/DFRobot/DFRobot_BMM150
  */
-#ifndef __DFRobot_bmm150_H__
-#define __DFRobot_bmm150_H__
+#ifndef __DFRobot_BMM150_H__
+#define __DFRobot_BMM150_H__
 #include "bmm150_defs.h"
 #include "Arduino.h"
 #include <stdlib.h>
@@ -17,10 +17,19 @@
 #include <Wire.h>
 #include <math.h>
 
-class DFRobot_bmm150{
+
+//#define ENABLE_DBG                // Open this macro to see the program running in detail
+
+#ifdef ENABLE_DBG
+#define DBG(...) {Serial.print("[");Serial.print(__FUNCTION__); Serial.print("(): "); Serial.print(__LINE__); Serial.print(" ] "); Serial.println(__VA_ARGS__);}
+#else
+#define DBG(...)
+#endif
+
+class DFRobot_BMM150{
 public:
-  DFRobot_bmm150();
-  ~DFRobot_bmm150();
+  DFRobot_BMM150();
+  ~DFRobot_BMM150();
   bool    sensorInit(void);
   uint8_t getChipID(void);
   void    softReset(void);
@@ -35,10 +44,6 @@ public:
   uint8_t getDataReadlyState(void);
   void    setMeasurementXYZ(uint8_t channelX ,uint8_t channelY, uint8_t channelZ);
   uint8_t getMeasurementStateXYZ(uint8_t channel);
-  void    setDataOverrun(uint8_t modes);
-  uint8_t getDataOverrunState(void);
-  void    setOverflowPin(uint8_t modes);
-  uint8_t getOverflowState(void);
   void    setLowThresholdInterrupt(uint8_t channelX ,uint8_t channelY, uint8_t channelZ , int8_t lowThreshold);
   uint8_t getLowThresholdInterrputState(void);
   void    setHighThresholdInterrupt(uint8_t channelX ,uint8_t channelY, uint8_t channelZ , int8_t highThreshold);
@@ -69,14 +74,18 @@ protected:
   void    advSelfTestMeasurement(uint8_t selfTestCurrent, int16_t *dataZ);
   int8_t  validateAdvSelfTest(int16_t postiveDataZ, int16_t negativeDataZ);
   void    setAdvSelfTestCurrent(uint8_t selfTestCurrent);
+  void    setDataOverrun(uint8_t modes);
+  uint8_t getDataOverrunState(void);
+  void    setOverflowPin(uint8_t modes);
+  uint8_t getOverflowState(void);
   virtual void writeData(uint8_t Reg ,uint8_t *Data ,uint8_t len) = 0;
   virtual int16_t readData(uint8_t Reg ,uint8_t *Data ,uint8_t len) = 0;
 private:
 };
 
-class DFRobot_bmm150_I2C:public DFRobot_bmm150{
+class DFRobot_BMM150_I2C:public DFRobot_BMM150{
 public:
-  DFRobot_bmm150_I2C(TwoWire *pWire=&Wire ,uint8_t addr = 0x75);
+  DFRobot_BMM150_I2C(TwoWire *pWire=&Wire ,uint8_t addr = 0x75);
   bool begin(void);
 protected:
   virtual void     writeData(uint8_t Reg ,uint8_t *Data ,uint8_t len);
@@ -87,10 +96,10 @@ private:
 };
 
 
-class DFRobot_bmm150_SPI:public DFRobot_bmm150{
+class DFRobot_BMM150_SPI:public DFRobot_BMM150{
 public:
   bool begin(void);
-  DFRobot_bmm150_SPI(SPIClass *spi=&SPI, uint8_t csPin=10);
+  DFRobot_BMM150_SPI(SPIClass *spi=&SPI, uint8_t csPin=10);
 protected:
   virtual void     writeData(uint8_t Reg ,uint8_t *Data ,uint8_t len);
   virtual int16_t  readData(uint8_t Reg ,uint8_t *Data ,uint8_t len);

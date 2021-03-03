@@ -11,10 +11,14 @@
 
 #include "DFRobot_bmm150.h"
 
-#define I2C_ADDRESS     0x13
-DFRobot_bmm150_I2C bmm150(&Wire ,I2C_ADDRESS);
-//#define CS_PIN          10
-//DFRobot_bmm150_SPI bmm150(&SPI ,CS_PIN);
+#define I2C_COMMUNICATION
+#ifdef  I2C_COMMUNICATION
+  #define I2C_ADDRESS    0x13
+  DFRobot_BMM150_I2C bmm150(&Wire ,I2C_ADDRESS);
+#else
+  #define CS_PIN         10
+  DFRobot_BMM150_SPI bmm150(&SPI ,CS_PIN);
+#endif
 
 void setup() 
 {

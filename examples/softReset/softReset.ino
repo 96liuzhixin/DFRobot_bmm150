@@ -11,10 +11,14 @@
 
 #include "DFRobot_bmm150.h"
 
-#define I2C_ADDRESS     0x13
-DFRobot_bmm150_I2C bmm150(&Wire ,I2C_ADDRESS);
-//#define CS_PIN          10
-//DFRobot_bmm150_SPI bmm150(&SPI ,CS_PIN);
+#define I2C_COMMUNICATION
+#ifdef  I2C_COMMUNICATION
+  #define I2C_ADDRESS    0x13
+  DFRobot_BMM150_I2C bmm150(&Wire ,I2C_ADDRESS);
+#else
+  #define CS_PIN         10
+  DFRobot_BMM150_SPI bmm150(&SPI ,CS_PIN);
+#endif
 
 void setup() 
 {
@@ -56,6 +60,93 @@ void setup()
       break;
   }
 
+#if 0
+  Serial.print("chip id = 0x");
+  Serial.println(bmm150.getChipID(),HEX);
+
+  /*
+   *  set rate
+   *      BMM150_DATA_RATE_10HZ   (default rate)
+   *      BMM150_DATA_RATE_02HZ
+   *      BMM150_DATA_RATE_06HZ
+   *      BMM150_DATA_RATE_08HZ
+   *      BMM150_DATA_RATE_15HZ
+   *      BMM150_DATA_RATE_20HZ
+   *      BMM150_DATA_RATE_25HZ
+   *      BMM150_DATA_RATE_30HZ
+   */
+  bmm150.setRate(BMM150_DATA_RATE_30HZ);
+
+  /*
+   *  get rate
+   *      BMM150_DATA_RATE_10HZ   (default rate)
+   *      BMM150_DATA_RATE_02HZ
+   *      BMM150_DATA_RATE_06HZ
+   *      BMM150_DATA_RATE_08HZ
+   *      BMM150_DATA_RATE_15HZ
+   *      BMM150_DATA_RATE_20HZ
+   *      BMM150_DATA_RATE_25HZ
+   *      BMM150_DATA_RATE_30HZ
+   */
+  uint8_t rate = bmm150.getRate();
+  switch(rate)
+  {
+    case BMM150_DATA_RATE_10HZ:
+      Serial.println("rate is 10hz");
+      break;
+    case BMM150_DATA_RATE_02HZ:
+      Serial.println("rate is 2hz");
+      break;
+    case BMM150_DATA_RATE_06HZ:
+      Serial.println("rate is 6hz");
+      break;
+    case BMM150_DATA_RATE_08HZ:
+      Serial.println("rate is 8hz");
+      break;
+    case BMM150_DATA_RATE_15HZ:
+      Serial.println("rate is 15hz");
+      break;
+    case BMM150_DATA_RATE_20HZ:
+      Serial.println("rate is 20hz");
+      break;
+    case BMM150_DATA_RATE_25HZ:
+      Serial.println("rate is 25hz");
+      break;
+    case BMM150_DATA_RATE_30HZ:
+      Serial.println("rate is 30hz");
+      break;
+  }
+  /*
+   *  Set the measurement of the xyz axis channel 
+   *
+   *  channel x selection:
+   *      enable x  : MEASUREMENT_X_ENABLE  (Default x-axis channel enabled)
+   *      disable x : MEASUREMENT_X_DISABLE
+   *  channel y selection:
+   *      enable y  : MEASUREMENT_Y_ENABLE  (Default y-axis channel enabled)
+   *      disable y : MEASUREMENT_Y_DISABLE
+   *  channel y selection:
+   *      enable z  : MEASUREMENT_Z_ENABLE  (Default z-axis channel enabled)
+   *      disable z : MEASUREMENT_Z_DISABLE
+   */
+  bmm150.setMeasurementXYZ(MEASUREMENT_X_ENABLE ,MEASUREMENT_Y_ENABLE ,MEASUREMENT_Z_ENABLE);
+  
+  /*
+   *  channel ? selection:
+   *      channel x : CHANNEL_X
+   *      channel y : CHANNEL_Y
+   *      channel z : CHANNEL_Z
+   *  measurement status
+   *      1 is  enable measurement
+   *      0 is  disable measurement
+   */
+  uint8_t channel = bmm150.getMeasurementStateXYZ(CHANNEL_X);
+  if(channel == 1){
+    Serial.println("channel x is enable!");
+  }else{
+    Serial.println("channel x is disable!");
+  }
+#endif
   bmm150.softReset();    // After software reset ,resume sleep mode ,(Suspended mode cannot be reset)
 }
 
